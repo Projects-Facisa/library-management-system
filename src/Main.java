@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        BookManager bookManager = new BookManager(2); // Capacidade inicial de 2 livros
         int opcao;
 
         do {
@@ -14,14 +15,23 @@ public class Main {
             System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Limpa o buffer do scanner
 
             switch (opcao) {
-                case 1:
-                    System.out.println("Adicionar Livro");
+                case 1: // Adicionar livro
+                    System.out.print("Digite o título do livro: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Digite o autor do livro: ");
+                    String author = scanner.nextLine();
+                    System.out.print("Digite o ano de publicação do livro: ");
+                    int yearOfPublication = scanner.nextInt();
+                    bookManager.addBook(new Books(title, author, yearOfPublication));
+                    System.out.println("Livro adicionado com sucesso!");
+
                     break;
-                case 2:
-                    System.out.println("Listar Livros");
+                case 2: // Listar livros
+                    System.out.println("Listar Livros:");
+                    bookManager.listBooks();
                     break;
                 case 3:
                     System.out.println("Ordenar Livros");
@@ -32,8 +42,9 @@ public class Main {
                 case 5:
                     System.out.println("Saindo...");
                     break;
+
                 default:
-                    System.out.println("Opção invalida! Tente novamente.");
+                    System.out.println("Opção inválida! Tente novamente.");
             }
         } while (opcao != 5);
 
