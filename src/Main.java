@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List list = new List(2); // Capacidade inicial de 2 livros
+        SequentialList list = new SequentialList(2); // Capacidade inicial de 2 livros
         int opcao;
 
         do {
@@ -52,8 +52,39 @@ public class Main {
                     }
                     break;
                 case 4:
-                    System.out.println("Buscar Livro");
+
+                    boolean voltarMenuPrincipal = false;
+
+                    do {
+                        System.out.println("Buscar Livro por:");
+                        System.out.println("1. Título");
+                        System.out.println("2. Autor");
+                        System.out.println("0. Voltar");
+                        System.out.print("Escolha uma opção: ");
+                        int opcaoBuscar = scanner.nextInt();
+                        scanner.nextLine(); // Limpa o buffer do scanner
+
+                        switch (opcaoBuscar) {
+                            case 1:
+                                System.out.print("Digite o Título do Livro: ");
+                                String titleQuery = scanner.nextLine();
+                                voltarMenuPrincipal = list.searchBookByTitle(titleQuery);
+                                break;
+                            case 2:
+                                System.out.print("Digite o nome do Autor: ");
+                                String authorQuery = scanner.nextLine();
+                                voltarMenuPrincipal = list.searchBookByAuthor(authorQuery);
+                                break;
+                            case 0:
+                                System.out.println("Voltando...");
+                                voltarMenuPrincipal = true; // Sinaliza para sair do loop de busca
+                                break;
+                            default:
+                                System.out.println("Opção inválida! Tente novamente.");
+                        }
+                    } while (!voltarMenuPrincipal); // Sai do loop quando `voltarMenuPrincipal` for true
                     break;
+
                 case 5:
                     System.out.println("Saindo...");
                     break;
