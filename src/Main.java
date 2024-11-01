@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        BookManager bookManager = new BookManager(2); // Capacidade inicial de 2 livros
+        List list = new List(2); // Capacidade inicial de 2 livros
         int opcao;
 
         do {
@@ -25,16 +25,31 @@ public class Main {
                     String author = scanner.nextLine();
                     System.out.print("Digite o ano de publicação do livro: ");
                     int yearOfPublication = scanner.nextInt();
-                    bookManager.addBook(new Books(title, author, yearOfPublication));
+                    list.addBook(new Books(title, author, yearOfPublication));
                     System.out.println("Livro adicionado com sucesso!");
 
                     break;
                 case 2: // Listar livros
                     System.out.println("Listar Livros:");
-                    bookManager.listBooks();
+                    list.listBooks();
                     break;
-                case 3:
-                    System.out.println("Ordenar Livros");
+                case 3: // Ordenar livros
+                    System.out.println("Escolha o critério de ordenação:");
+                    System.out.println("1 - Ordenar por Título");
+                    System.out.println("2 - Ordenar por Autor");
+                    int sortOption = scanner.nextInt();
+
+                    if (sortOption == 1) {
+                        list.bubbleSortByTitle(); 
+                        System.out.println("Livros ordenados por título:");
+                        list.listBooks(); 
+                    } else if (sortOption == 2) {
+                        list.bubbleSortByAuthor(); 
+                        System.out.println("Livros ordenados por autor:");
+                        list.listBooks(); 
+                    } else {
+                        System.out.println("Opção de ordenação inválida.");
+                    }
                     break;
                 case 4:
                     System.out.println("Buscar Livro");
