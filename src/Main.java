@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        BookManager bookManager = new BookManager(2); // Capacidade inicial de 2 livros
+        SequentialList list = new SequentialList(2); // Capacidade inicial de 2 livros
         int opcao;
 
         do {
@@ -25,20 +25,51 @@ public class Main {
                     String author = scanner.nextLine();
                     System.out.print("Digite o ano de publicação do livro: ");
                     int yearOfPublication = scanner.nextInt();
-                    bookManager.addBook(new Books(title, author, yearOfPublication));
+                    list.addBook(new Books(title, author, yearOfPublication));
                     System.out.println("Livro adicionado com sucesso!");
 
                     break;
                 case 2: // Listar livros
                     System.out.println("Listar Livros:");
-                    bookManager.listBooks();
+                    list.listBooks();
                     break;
                 case 3:
                     System.out.println("Ordenar Livros");
                     break;
                 case 4:
-                    System.out.println("Buscar Livro");
+
+                    boolean voltarMenuPrincipal = false;
+
+                    do {
+                        System.out.println("Buscar Livro por:");
+                        System.out.println("1. Título");
+                        System.out.println("2. Autor");
+                        System.out.println("0. Voltar");
+                        System.out.print("Escolha uma opção: ");
+                        int opcaoBuscar = scanner.nextInt();
+                        scanner.nextLine(); // Limpa o buffer do scanner
+
+                        switch (opcaoBuscar) {
+                            case 1:
+                                System.out.print("Digite o Título do Livro: ");
+                                String titleQuery = scanner.nextLine();
+                                voltarMenuPrincipal = list.searchBookByTitle(titleQuery);
+                                break;
+                            case 2:
+                                System.out.print("Digite o nome do Autor: ");
+                                String authorQuery = scanner.nextLine();
+                                voltarMenuPrincipal = list.searchBookByAuthor(authorQuery);
+                                break;
+                            case 0:
+                                System.out.println("Voltando...");
+                                voltarMenuPrincipal = true; // Sinaliza para sair do loop de busca
+                                break;
+                            default:
+                                System.out.println("Opção inválida! Tente novamente.");
+                        }
+                    } while (!voltarMenuPrincipal); // Sai do loop quando `voltarMenuPrincipal` for true
                     break;
+
                 case 5:
                     System.out.println("Saindo...");
                     break;
