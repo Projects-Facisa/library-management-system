@@ -97,6 +97,6 @@ public class Main {
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida! Tente novamente.");
             }
-        } while (opcao != 5);
+        } while (opcao != 0);
     }
 }
