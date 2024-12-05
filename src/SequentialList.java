@@ -16,11 +16,23 @@ public class SequentialList {
         books[count++] = book;
     }
 
-    public void listBooks() { // Listar livros
+    public String listBooks() {
+        StringBuilder bookList = new StringBuilder();
+    
         for (int i = 0; i < count; i++) {
-            System.out.println(books[i].getTitle() + " - " + books[i].getAuthor() + " - " + books[i].getYearOfPublication());
+            bookList.append(i + 1 + " -")
+                    .append("  Autor: ").append(books[i].getAuthor()) 
+                    .append("  Título: ").append(books[i].getTitle()) 
+                    .append("  Ano Pub.: ").append(books[i].getYearOfPublication()).append("\n");
         }
+        
+        if (bookList.length() == 0) {
+            return "Nenhum livro cadastrado.";
+        }
+    
+        return bookList.toString();
     }
+    
 
     public boolean searchBookByTitle(String title) { // Buscar por Título
         boolean found = false;
