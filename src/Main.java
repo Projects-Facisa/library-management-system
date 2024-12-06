@@ -2,7 +2,7 @@ import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) {
-        BinarySearchTree tree = new BinarySearchTree();
+        AVLTree tree = new AVLTree();
         int opcao;
 
         do {
@@ -35,11 +35,15 @@ public class Main {
 
                 case 2: // Listar livros
                     String booksList = tree.listBooks();
-                    JOptionPane.showMessageDialog(null, booksList);
+                    if (booksList.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Nenhum livro cadastrado.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, booksList);
+                    }
                     break;
 
-                case 3: // Recomendar livros
-                    String searchOption = JOptionPane.showInputDialog("Recomendar livro por:\n1. Título\n2. Autor");
+                case 3: // Pesquisar livro
+                    String searchOption = JOptionPane.showInputDialog("Pesquisar livro por:\n1. Título\n2. Autor");
                     if (searchOption.equals("1")) {
                         String titleQuery = JOptionPane.showInputDialog("Digite o Título do Livro:");
                         Books foundBook = tree.searchByTitle(titleQuery);
@@ -54,12 +58,15 @@ public class Main {
                     } else if (searchOption.equals("2")) {
                         String authorQuery = JOptionPane.showInputDialog("Digite o Autor do Livro:");
                         String booksByAuthor = tree.searchByAuthor(authorQuery);
-                        JOptionPane.showMessageDialog(null, booksByAuthor, "Livros do autor " + authorQuery,JOptionPane.INFORMATION_MESSAGE);
+                        if (booksByAuthor.isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Nenhum livro encontrado para o autor: " + authorQuery);
+                        } else {
+                            JOptionPane.showMessageDialog(null, booksByAuthor, "Livros do autor " + authorQuery, JOptionPane.INFORMATION_MESSAGE);
+                        }
                     } else {
                         JOptionPane.showMessageDialog(null, "Opção inválida!");
                     }
                     break;
-                
 
                 case 0: // Sair
                     JOptionPane.showMessageDialog(null, "Saindo...");
