@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class AVLTree {
     private TreeNode root;
     private AuthorIndex authorIndex;
@@ -97,6 +99,11 @@ public class AVLTree {
     }
 
     // Listar livros
+
+    public String getRoot() {
+        return root.book.getTitle();
+    }
+
     public String listBooks() {
         StringBuilder bookList = new StringBuilder();
         listBooksRec(root, bookList);
@@ -107,8 +114,8 @@ public class AVLTree {
         if (node != null) {
             listBooksRec(node.left, bookList);
             bookList.append("Título: ").append(node.book.getTitle())
-                    .append("  Autor: ").append(node.book.getAuthor())
-                    .append("  Ano Pub.: ").append(node.book.getYearOfPublication()).append("\n");
+                    .append("  --  Autor: ").append(node.book.getAuthor())
+                    .append("  --  Ano Pub.: ").append(node.book.getYearOfPublication()).append("\n");
             listBooksRec(node.right, bookList);
         }
     }
@@ -116,25 +123,25 @@ public class AVLTree {
     // Buscar livros por autor
     public String searchByAuthor(String author) {
         return authorIndex.getBooksByAuthor(author).stream()
-                .map(book -> "Título: " + book.getTitle())
+                .map(book -> "Título: " + book.getTitle() + "  --   Ano: " + book.getYearOfPublication())
                 .reduce((book1, book2) -> book1 + "\n" + book2)
                 .orElse("Nenhum livro encontrado para o autor: " + author);
     }
 
-    // Buscar por título
-    public Books searchByTitle(String title) {
-        return searchByTitleRec(root, title);
-    }
 
-    private Books searchByTitleRec(TreeNode node, String title) {
-        if (node == null || node.book.getTitle().equalsIgnoreCase(title)) {
-            return node != null ? node.book : null;
+    // Listar autores com a quantidade de livros registrados
+    public String listAuthorsWithBookCount() {
+        Map<String, Integer> authorsWithCount = authorIndex.getAuthorsWithBookCount();
+        if (authorsWithCount.isEmpty()) {
+            return "Nenhum autor cadastrado.";
         }
 
-        if (title.compareToIgnoreCase(node.book.getTitle()) < 0) {
-            return searchByTitleRec(node.left, title);
+        StringBuilder result = new StringBuilder("Autores e quantidade de livros cadastrados:\n");
+        for (Map.Entry<String, Integer> entry : authorsWithCount.entrySet()) {
+            result.append("Autor: ").append(entry.getKey())
+                    .append(" -- Livros registrados: ").append(entry.getValue())
+                    .append("\n");
         }
-
-        return searchByTitleRec(node.right, title);
+        return result.toString();
     }
 }

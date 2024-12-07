@@ -1,16 +1,61 @@
 import javax.swing.JOptionPane;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         AVLTree tree = new AVLTree();
+
+        // Criar livros com todas as letras do alfabeto
+        List<Books> books = Arrays.asList(
+                new Books("Zoology", "Silas", 2000),         // Z
+                new Books("Astronomy", "Silas", 1995),      // A
+                new Books("Botany", "Silas", 1987),        // B
+                new Books("Chemistry", "Silas", 2005),     // C
+                new Books("Drama", "Diana", 1990),         // D
+                new Books("Economics", "Ethan", 2003),     // E
+                new Books("Fiction", "Fiona", 2011),       // F
+                new Books("Geography", "George", 1993),    // G
+                new Books("History", "Harry", 1999),       // H
+                new Books("Information Technology", "Iris", 2018), // I
+                new Books("Journalism", "Jack", 2001),     // J
+                new Books("Kinetics", "Kara", 2007),       // K
+                new Books("Linguistics", "Marclod", 1996),    // L
+                new Books("Mathematics", "Mike", 2010),    // M
+                new Books("Neurology", "Nina", 2020),      // N
+                new Books("Oceanography", "Oliver", 1998), // O
+                new Books("Philosophy", "Yuri", 2004),    // P
+                new Books("Quantum Mechanics", "Yuri", 2015), // Q
+                new Books("Robotics", "Rachel", 2017),     // R
+                new Books("Sociology", "Sophia", 1991),    // S
+                new Books("Theology", "Yuri", 2002),     // T
+                new Books("Urban Studies", "Uma", 2013),   // U
+                new Books("Virology", "Neto", 1988),     // V
+                new Books("World History", "Neto", 1994), // W
+                new Books("Xenobiology", "Caio", 2006),  // X
+                new Books("Youth Studies", "Marclod", 2021)   // Y
+        );
+
+        // Embaralhar a lista para garantir ordem aleatória
+        Collections.shuffle(books);
+
+        // Inserir os livros na árvore AVL
+        for (Books book : books) {
+            tree.insert(book);
+        }
+
+
         int opcao;
 
         do {
             String menu = """
                 --- Gerenciamento de Livros ---
                 1. Adicionar Livro
-                2. Listar Livros
-                3. Pesquisar Livro
+                2. Listar Livros (in-order)
+                3. Listar Autores e Qtnd de Livros
+                4. Recomendar Livros Por Autor
+                5. Pesquisar Raiz atual da Arvore
                 0. Sair
                 Escolha uma opção:
                 """;
@@ -42,31 +87,25 @@ public class Main {
                     }
                     break;
 
-                case 3: // Pesquisar livro
-                    String searchOption = JOptionPane.showInputDialog("Pesquisar livro por:\n1. Título\n2. Autor");
-                    if (searchOption.equals("1")) {
-                        String titleQuery = JOptionPane.showInputDialog("Digite o Título do Livro:");
-                        Books foundBook = tree.searchByTitle(titleQuery);
-                        if (foundBook != null) {
-                            JOptionPane.showMessageDialog(null, "Livro encontrado:\n" +
-                                    "Título: " + foundBook.getTitle() + "\n" +
-                                    "Autor: " + foundBook.getAuthor() + "\n" +
-                                    "Ano: " + foundBook.getYearOfPublication());
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Livro não encontrado.");
-                        }
-                    } else if (searchOption.equals("2")) {
-                        String authorQuery = JOptionPane.showInputDialog("Digite o Autor do Livro:");
-                        String booksByAuthor = tree.searchByAuthor(authorQuery);
-                        if (booksByAuthor.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Nenhum livro encontrado para o autor: " + authorQuery);
-                        } else {
-                            JOptionPane.showMessageDialog(null, booksByAuthor, "Livros do autor " + authorQuery, JOptionPane.INFORMATION_MESSAGE);
-                        }
+                case 3: // Listar Autores e quantidade de livros
+                    String listBooksByAuthor = tree.listAuthorsWithBookCount();
+                    JOptionPane.showMessageDialog(null, listBooksByAuthor);
+
+                case 4: // Recomendar livro por Autor
+                    String authorQuery = JOptionPane.showInputDialog("Digite o Autor do Livro:");
+                    String booksByAuthor = tree.searchByAuthor(authorQuery);
+                    if (booksByAuthor.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Nenhum livro encontrado para o autor: " + authorQuery);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Opção inválida!");
+                        JOptionPane.showMessageDialog(null, booksByAuthor, "Livros do autor " + authorQuery, JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
+
+                case 5: // Pesquisar Raiz atual da Arvore
+                    String root = tree.getRoot();
+                    JOptionPane.showMessageDialog(null, "Raiz Atual: " + root);
+                    break;
+
 
                 case 0: // Sair
                     JOptionPane.showMessageDialog(null, "Saindo...");

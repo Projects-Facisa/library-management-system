@@ -22,13 +22,13 @@ public class AuthorIndex {
         return authorMap.getOrDefault(author.toLowerCase(), new ArrayList<>());
     }
 
-    // Listar todos os autores e seus livros
-    public void listAllAuthors() {
+
+    // Obter autores com a quantidade de livros registrados
+    public Map<String, Integer> getAuthorsWithBookCount() {
+        Map<String, Integer> authorBookCount = new HashMap<>();
         for (Map.Entry<String, List<Books>> entry : authorMap.entrySet()) {
-            System.out.println("Autor: " + entry.getKey());
-            for (Books book : entry.getValue()) {
-                System.out.println("\tTítulo: " + book.getTitle());
-            }
+            authorBookCount.put(entry.getKey(), entry.getValue().size());
         }
+        return authorBookCount;
     }
 }
