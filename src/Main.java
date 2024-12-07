@@ -90,6 +90,7 @@ public class Main {
                 case 3: // Listar Autores e quantidade de livros
                     String listBooksByAuthor = tree.listAuthorsWithBookCount();
                     JOptionPane.showMessageDialog(null, listBooksByAuthor);
+                    break;
 
                 case 4: // Recomendar livro por Autor
                     String authorQuery = JOptionPane.showInputDialog("Digite o Autor do Livro:");

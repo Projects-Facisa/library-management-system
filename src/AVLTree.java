@@ -139,7 +139,7 @@ public class AVLTree {
         StringBuilder result = new StringBuilder("Autores e quantidade de livros cadastrados:\n");
         for (Map.Entry<String, Integer> entry : authorsWithCount.entrySet()) {
             result.append("Autor: ").append(entry.getKey())
-                    .append(" -- Livros registrados: ").append(entry.getValue())
+                    .append(" = ").append(entry.getValue())
                     .append("\n");
         }
         return result.toString();
